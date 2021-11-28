@@ -1,25 +1,24 @@
-import logo from './logo.svg';
+import React, { lazy, Suspense } from 'react';
+import { Spinner } from 'react-bootstrap';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const Home = lazy(() => import('./HomePage/Home'));
+const Member = lazy(() => import('./MemberPage/Member'));
+const Transaction = lazy(() => import('./TransactionPage/Transaction'));
+const AddTransaction = lazy(() => import('./TransactionPage/AddTransaction'));
+
+const App = () => (
+  <Router>
+    <Suspense fallback={<Spinner animation="border" />}>
+      <Switch>
+        <Route exact path="/" component={Home}></Route>
+        <Route exact path="/member" component={Member}></Route>
+        <Route exact path="/transaction" component={Transaction}></Route>
+        <Route exact path="/transaction/add" component={AddTransaction}></Route>
+      </Switch>
+    </Suspense>
+  </Router>
+);
 
 export default App;
